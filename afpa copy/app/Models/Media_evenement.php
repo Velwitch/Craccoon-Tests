@@ -21,22 +21,7 @@ class Media_evenement extends Model
 		
 	];
 
-    public static function lesImages(){
-		$images = Media_evenement::select('*')
-		->join('type_medias', 'media_evenements.id_type_media', '=', 'type_medias.id_type_media' )
-		->get();
-
-		return $images;
-	}
-    public static function cetteImage($id){
-		$image = Media_evenement::select('*')
-		->join('type_medias', 'media_evenements.id_type_media', '=', 'type_medias.id_type_media' )
-		->join('evenement_media_evenement', 'media_evenements.id_media', '=', 'evenement_media_evenement.id_media' )
-		->where('evenement_media_evenement.id_evenement', $id)
-		->get();
-
-		return $image;
-	}
+    
   
 
     public function evenements()

@@ -24,29 +24,6 @@ class Evenement extends Model
     ];
 
 
-    public static function lesEvenements(){
-        $evenements = Evenement::select('*')
-        ->join('templates', 'evenements.id_template', '=', 'templates.id_template')
-        ->join('visibilites', 'evenements.id_visibilite', '=', 'visibilites.id_visibilite')
-        ->join('etats', 'evenements.id_etat', '=', 'etats.id_etat')
-        ->get();
-
-        return $evenements;
-    }
-    public static function cetEvenement($id){
-        $evenement = Evenement::select('*')
-        ->join('templates', 'evenements.id_template', '=', 'templates.id_template')
-        ->join('visibilites', 'evenements.id_visibilite', '=', 'visibilites.id_visibilite')
-        ->join('etats', 'evenements.id_etat', '=', 'etats.id_etat')
-        ->where('evenements.id_evenement', $id)
-        ->get();
-
-        return $evenement;
-    }
-
-
-
-
 
     public function visibilite()
     {
