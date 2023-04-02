@@ -21,23 +21,40 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
 
-        Visibilite::factory(3)->create();
-        Etat::factory(3)->create();
+        $visibilites = ['visible', 'protégé', 'confidentiel'];
+        $etats = ['publié', 'non publié', 'archivé'];
+        $typesMedia=['video', 'image'];
+        
+        foreach ($visibilites as $visibilite) {
+            Visibilite::factory()->create([
+                'nom_visibilite' => $visibilite,
+            ]);
+        }
+        foreach ($etats as $etat) {
+            Etat::factory()->create([
+                'nom_etat' => $etat,
+            ]);
+        }
+        foreach ($typesMedia as $typeMedia) {
+            Type_Media::factory()->create([
+                'nom_type_media' => $typeMedia,
+            ]);
+        }
+        /* Visibilite::factory(3)->create(); */
+        /* Etat::factory(3)->create(); */
+        /*  Type_Media::factory(2)->create(); */
         Template::factory(4)->create();
-        Type_Media::factory(2)->create();
         Evenement::factory(10)->create();
         Media_evenement::factory(10)->create();
 
         $evenements = Evenement::all();
         $mediaEvenements = Media_evenement::all();
-        
-        foreach($evenements as $evenement){
+
+        foreach ($evenements as $evenement) {
             $randomMedias = $mediaEvenements->random(mt_rand(1, 4));
-            foreach($randomMedias as $randomMedia){
+            foreach ($randomMedias as $randomMedia) {
                 $evenement->media_evenements()->attach($randomMedia);
             }
         }
-       
-        
     }
 }
