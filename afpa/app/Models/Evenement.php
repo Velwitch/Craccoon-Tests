@@ -14,10 +14,10 @@ class Evenement extends Model
     protected $primaryKey = 'id_evenement';
 
     protected $fillable = [
-        'titre_evenements',
-        'slug_evenements',
-        'resume_evenements',
-        'contenu_evenements',
+        'titre_evenement',
+        'slug_evenement',
+        'resume_evenement',
+        'contenu_evenement',
         'id_etat',
         'id_template',
         'id_visibilite',
@@ -60,8 +60,8 @@ class Evenement extends Model
     {
         return $this->belongsTo(Template::class);
     }
-    public function media_evenements()
-    {
-        return $this->belongsToMany(Media_evenement::class, 'evenement_media_evenement', 'id_evenement', 'id_media');
-    }
+    public function media_evements()
+	{
+		return $this->hasMany(Media_evenement::class);
+	}
 }

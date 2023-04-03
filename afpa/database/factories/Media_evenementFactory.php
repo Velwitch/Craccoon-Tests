@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
 use App\Models\Type_media;
+use App\Models\Evenement;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Media_evenement>
@@ -22,6 +23,7 @@ class Media_evenementFactory extends Factory
             'titre_media_evenement'=> fake()->title(),
             'position_media_evenement'=> fake()->numberBetween($min = 0, $max = 3),
             'id_type_media'=> Type_media::all()->random()->id_type_media,
+            'id_evenement'=> Evenement::all()->random()->id_evenement,
         ];
     }
 }

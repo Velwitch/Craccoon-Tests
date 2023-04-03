@@ -18,6 +18,7 @@ class Media_evenement extends Model
 		'titre_media_evenement',
 		'position_media_evenement',
 		'id_type_media',
+		'id_evenement',
 		
 	];
 
@@ -39,10 +40,11 @@ class Media_evenement extends Model
 	}
   
 
-    public function evenements()
-	{
-		return $this->belongsToMany(Evenement::class, 'evenement_media_evenement', 'id_media', 'id_evenement');
-	}
+    public function evenement()
+    {
+        return $this->belongsTo(Evenement::class);
+    }
+
     public function type_media()
 	{
 		return $this->belongsTo(Type_media::class);

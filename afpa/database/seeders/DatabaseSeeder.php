@@ -47,14 +47,6 @@ class DatabaseSeeder extends Seeder
         Evenement::factory(10)->create();
         Media_evenement::factory(10)->create();
 
-        $evenements = Evenement::all();
-        $mediaEvenements = Media_evenement::all();
-
-        foreach ($evenements as $evenement) {
-            $randomMedias = $mediaEvenements->random(mt_rand(1, 4));
-            foreach ($randomMedias as $randomMedia) {
-                $evenement->media_evenements()->attach($randomMedia);
-            }
-        }
+        
     }
 }
