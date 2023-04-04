@@ -14,8 +14,8 @@ return new class extends Migration
     public function up()
     {
         Schema::create('visibilites', function (Blueprint $table) {
-            $table->id('id_visibilite');
-            $table->string('nom_visibilite');
+            $table->id();
+            $table->string('nom');
             $table->timestamps();
         });
     }
