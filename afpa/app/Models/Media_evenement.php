@@ -22,7 +22,7 @@ class Media_evenement extends Model
 		
 	];
 
-    public static function lesImages(){
+    public static function lesMedias(){
 		$images = Media_evenement::select('*')
 		->join('type_medias', 'media_evenements.id_type_media', '=', 'type_medias.id_type_media' )
 		->get();

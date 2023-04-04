@@ -18,9 +18,12 @@ class EvenementAdminController extends Controller
     public function index()
     {
         $evenements = Evenement::lesEvenements();
-        $images = Media_evenement::lesImages();
+        $images = Media_evenement::lesMedias();
         $all = [$evenements, $images];
-        return ($all);
+        return view('indexGestionArticle')
+        ->with('images', $images)
+        ->with('evenements', $evenements);
+
     }
 
     /**
@@ -104,11 +107,7 @@ class EvenementAdminController extends Controller
      */
     public function show($id)
     {
-        $evenement = Evenement::cetEvenement($id);
-        $image = Media_evenement::cetteImage($id);
-        $video = Media_evenement::cetteVideo($id);
-        $all = [$evenement, $image, $video];
-        return ($all);
+     //
     }
 
     /**
