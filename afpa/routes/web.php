@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::resource('evenements', 'App\Http\Controllers\EvenementController');
+Route::resource('evenements', 'App\Http\Controllers\EvenementAdminController');
 
 Route::get('/', function () {
     return view('welcome');

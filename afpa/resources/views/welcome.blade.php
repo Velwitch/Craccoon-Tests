@@ -23,8 +23,9 @@
         </style>
     </head>
     <body class="antialiased">
-    <form id="recetteForm" class="px-5 " action="{{ route('evenements.store') }}" method="POST" enctype="multipart/form-data">
+    <form id="recetteForm" class="px-5 " action="{{ route('evenements.update', 11) }}" method="POST" enctype="multipart/form-data">
             @csrf
+            @method('DELETE')
             <button>ValidatesRequests</button>
         </form>
         <div class="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center py-4 sm:pt-0">

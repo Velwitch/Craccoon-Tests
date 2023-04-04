@@ -33,6 +33,7 @@ class Evenement extends Model
 
         return $evenements;
     }
+
     public static function cetEvenement($id){
         $evenement = Evenement::select('*')
         ->join('templates', 'evenements.id_template', '=', 'templates.id_template')
@@ -62,6 +63,6 @@ class Evenement extends Model
     }
     public function media_evements()
 	{
-		return $this->hasMany(Media_evenement::class);
+		return $this->hasMany(Media_evenement::class, 'id_evenement');
 	}
 }

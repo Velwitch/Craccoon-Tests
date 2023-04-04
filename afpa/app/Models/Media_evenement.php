@@ -31,12 +31,22 @@ class Media_evenement extends Model
 	}
     public static function cetteImage($id){
 		$image = Media_evenement::select('*')
-		->join('type_medias', 'media_evenements.id_type_media', '=', 'type_medias.id_type_media' )
-		->join('evenement_media_evenement', 'media_evenements.id_media', '=', 'evenement_media_evenement.id_media' )
-		->where('evenement_media_evenement.id_evenement', $id)
+		->join('type_medias', 'media_evenements.id_type_media', '=', 'type_medias.id_type_media' )		
+		->where('media_evenements.id_evenement', '=', $id)
+		->where('media_evenements.id_type_media','=', 2)
 		->get();
 
 		return $image;
+	}
+
+    public static function cetteVideo($id){
+		$video = Media_evenement::select('*')
+		->join('type_medias', 'media_evenements.id_type_media', '=', 'type_medias.id_type_media' )		
+		->where('media_evenements.id_evenement', '=', $id)
+		->where('media_evenements.id_type_media','=', 1)
+		->get();
+
+		return $video;
 	}
   
 
