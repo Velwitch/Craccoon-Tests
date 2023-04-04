@@ -19,8 +19,10 @@ return new class extends Migration
             $table->string('titre_media_evenement');
             $table->integer('position_media_evenement');
             $table->unsignedBigInteger('id_type_media');
+            $table->unsignedBigInteger('id_evenement');
 
             $table->foreign('id_type_media')->references('id_type_media')->on('type_medias')->onDelete('cascade');
+            $table->foreign('id_evenement')->references('id_evenement')->on('evenements')->onDelete('cascade');
 
             $table->timestamps();
         });
