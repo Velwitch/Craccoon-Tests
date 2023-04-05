@@ -17,10 +17,13 @@ class EvenementAdminController extends Controller
      */
     public function index()
     {
-        $evenements = Evenement::lesEvenements();
-        $images = Media::lesMedias();
-        $all = [$evenements, $images];
-        return $all;
+        $evenements = Evenement::all();
+        $images = Media::all();
+
+     
+        return view('evenements.gestionEvenements')
+        ->with('images', $images)
+        ->with('evenements', $evenements);
 
     }
 
@@ -195,6 +198,6 @@ class EvenementAdminController extends Controller
     $evenement->delete();
 
 
-        //
+    return redirect()->route('evenements.index');
     }
 }
