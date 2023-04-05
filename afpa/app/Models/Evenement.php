@@ -3,32 +3,33 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 
 class Evenement extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $table = 'evenements';
 
-    protected $primaryKey = 'id_evenement';
+    protected $primaryKey = 'id';
 
     protected $fillable = [
-        'titre_evenement',
-        'slug_evenement',
-        'resume_evenement',
-        'contenu_evenement',
-        'id_etat',
-        'id_template',
-        'id_visibilite',
+        'titre',
+        'slug',
+        'resume',
+        'contenu',
+        'etat_id',
+        'template_id',
+        'visibilite_id',
     ];
 
 
     public static function lesEvenements(){
         $evenements = Evenement::select('*')
-        ->join('templates', 'evenements.id_template', '=', 'templates.id_template')
-        ->join('visibilites', 'evenements.id_visibilite', '=', 'visibilites.id_visibilite')
-        ->join('etats', 'evenements.id_etat', '=', 'etats.id_etat')
+        ->join('templates', 'evenements.template_id', '=', 'templates.id')
+        ->join('visibilites', 'evenements.visibilite_id', '=', 'visibilites.id')
+        ->join('etats', 'evenements.etat_id', '=', 'etats.id')
         ->get();
 
         return $evenements;
@@ -36,10 +37,10 @@ class Evenement extends Model
 
     public static function cetEvenement($id){
         $evenement = Evenement::select('*')
-        ->join('templates', 'evenements.id_template', '=', 'templates.id_template')
-        ->join('visibilites', 'evenements.id_visibilite', '=', 'visibilites.id_visibilite')
-        ->join('etats', 'evenements.id_etat', '=', 'etats.id_etat')
-        ->where('evenements.id_evenement', $id)
+        ->join('templates', 'evenements.template_id', '=', 'templates.id')
+        ->join('visibilites', 'evenements.visibilite_id', '=', 'visibilites.id')
+        ->join('etats', 'evenements.etat_id', '=', 'etats.id')
+        ->where('evenements.id', $id)
         ->get();
 
         return $evenement;
@@ -63,6 +64,6 @@ class Evenement extends Model
     }
     public function media_evements()
 	{
-		return $this->hasMany(Media_evenement::class, 'id_evenement');
+		return $this->hasMany(Media::class, 'evenement_id');
 	}
 }

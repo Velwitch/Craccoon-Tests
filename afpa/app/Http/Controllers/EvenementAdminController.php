@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Evenement;
-use App\Models\Media_evenement;
+use App\Models\Media;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 
@@ -18,11 +18,9 @@ class EvenementAdminController extends Controller
     public function index()
     {
         $evenements = Evenement::lesEvenements();
-        $images = Media_evenement::lesMedias();
+        $images = Media::lesMedias();
         $all = [$evenements, $images];
-        return view('indexGestionArticle')
-        ->with('images', $images)
-        ->with('evenements', $evenements);
+        return $all;
 
     }
 
@@ -55,17 +53,17 @@ class EvenementAdminController extends Controller
         // --------------------------------------------------
 
         $evenement = Evenement::create([
-            'titre_evenement' => $titre,
-            'slug_evenement' => $slug,
-            'resume_evenement' => $resume,
-            'contenu_evenement' => $contenu,
-            'id_etat' => $idEtat,
-            'id_template' => $idTemplate,
-            'id_visibilite' => $idVisibilite,
+            'titre' => $titre,
+            'slug' => $slug,
+            'resume' => $resume,
+            'contenu' => $contenu,
+            'etat_id' => $idEtat,
+            'template_id' => $idTemplate,
+            'visibilite_id' => $idVisibilite,
 
         ]);
 
-        $idEvenement = $evenement['id_evenement'];
+        $idEvenement = $evenement['id'];
 
         //-------------------------------------
 
@@ -81,20 +79,20 @@ class EvenementAdminController extends Controller
 
 
 
-        Media_evenement::create([
-            'chemin_media_evenement' => $cheminImg,
-            'titre_media_evenement' => $titreImg,
-            'position_media_evenement' => $positionImg,
-            'id_type_media' => $idTypeImg,
-            'id_evenement' => $idEvenement,
+        Media::create([
+            'chemin' => $cheminImg,
+            'titre' => $titreImg,
+            'positionnement' => $positionImg,
+            'type_media_id' => $idTypeImg,
+            'evenement_id' => $idEvenement,
         ]);
 
-        Media_evenement::create([
-            'chemin_media_evenement' => $cheminVid,
-            'titre_media_evenement' => $titreVid,
-            'position_media_evenement' => $positionVid,
-            'id_type_media' => $idTypeVid,
-            'id_evenement' => $idEvenement,
+        Media::create([
+            'chemin' => $cheminVid,
+            'titre' => $titreVid,
+            'positionnement' => $positionVid,
+            'type_media_id' => $idTypeVid,
+            'evenement_id' => $idEvenement,
         ]);
     }
 
@@ -119,7 +117,7 @@ class EvenementAdminController extends Controller
     public function edit($id)
     {
         $evenements = Evenement::cetEvenement($id);
-        $image = Media_evenement::cetteImage($id);
+        $image = Media::cetteImage($id);
         $all = [$evenements, $image];
         return ($all);
     }
@@ -144,13 +142,13 @@ class EvenementAdminController extends Controller
 
         $evenement = Evenement::find($id);
 
-        $evenement->titre_evenement = $titre;
-        $evenement->slug_evenement = $slug;
-        $evenement->resume_evenement = $resume;
-        $evenement->contenu_evenement = $contenu;
-        $evenement->id_etat = $idEtat;
-        $evenement->id_template =  $idTemplate;
-        $evenement->id_visibilite = $idVisibilite;
+        $evenement->titre = $titre;
+        $evenement->slug = $slug;
+        $evenement->resume = $resume;
+        $evenement->contenu = $contenu;
+        $evenement->etat_id = $idEtat;
+        $evenement->template_id =  $idTemplate;
+        $evenement->visibilite_id = $idVisibilite;
         $evenement->save();
 
         // ----------------------------------
@@ -161,20 +159,20 @@ class EvenementAdminController extends Controller
 
         DB::transaction(function () use ($evenement, $image, $video) {
             $evenement->media_evements()->delete();
-             Media_evenement::create([
-            'chemin_media_evenement' => $image[0],
-            'titre_media_evenement' => $image[1],
-            'position_media_evenement' => $image[2],
-            'id_type_media' => $image[3],
-            'id_evenement' => $image[4],
+             Media::create([
+            'chemin' => $image[0],
+            'titre' => $image[1],
+            'positionnement' => $image[2],
+            'type_media_id' => $image[3],
+            'evenement_id' => $image[4],
         ]);
 
-        Media_evenement::create([
-            'chemin_media_evenement' =>  $video[0],
-            'titre_media_evenement' => $video[1],
-            'position_media_evenement' => $video[2],
-            'id_type_media' => $video[3],
-            'id_evenement' => $video[4],
+        Media::create([
+            'chemin' =>  $video[0],
+            'titre' => $video[1],
+            'positionnement' => $video[2],
+            'type_media_id' => $video[3],
+            'evenement_id' => $video[4],
         ]);
        
         });

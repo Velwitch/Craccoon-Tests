@@ -17,7 +17,7 @@ class VisibiliteFactory extends Factory
     public function definition()
     {
         return [
-            'nom_visibilite'=>fake()->word(),
+            'nom'=>fake()->word(),
         ];
     }
 }

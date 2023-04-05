@@ -14,19 +14,21 @@ return new class extends Migration
     public function up()
     {
         Schema::create('evenements', function (Blueprint $table) {
-            $table->id('id_evenement');
-            $table->string('titre_evenement');
-            $table->string('slug_evenement');
-            $table->text('resume_evenement');
-            $table->text('contenu_evenement');
-            $table->unsignedBigInteger('id_etat');
-            $table->unsignedBigInteger('id_template');
-            $table->unsignedBigInteger('id_visibilite');
+            $table->id();
+            $table->string('titre');
+            $table->string('slug');
+            $table->text('resume');
+            $table->text('contenu');
+            $table->unsignedBigInteger('etat_id');
+            $table->unsignedBigInteger('template_id');
+            $table->unsignedBigInteger('visibilite_id');
+            
             $table->timestamps();
+            $table->softDeletes();
 
-            $table->foreign('id_etat')->references('id_etat')->on('etats')->onDelete('cascade');
-            $table->foreign('id_template')->references('id_template')->on('templates')->onDelete('cascade');
-            $table->foreign('id_visibilite')->references('id_visibilite')->on('visibilites')->onDelete('cascade');
+            $table->foreign('etat_id')->references('id')->on('etats')->onDelete('cascade');
+            $table->foreign('template_id')->references('id')->on('templates')->onDelete('cascade');
+            $table->foreign('visibilite_id')->references('id')->on('visibilites')->onDelete('cascade');
    
         });
     }

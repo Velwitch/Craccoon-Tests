@@ -12,7 +12,7 @@ class Type_media extends Model
     protected $table = 'type_medias';
 
     protected $fillable = [
-		'nom_type_media',
+		'nom',
 		
 	];
 

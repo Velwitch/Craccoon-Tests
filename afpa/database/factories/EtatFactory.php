@@ -17,7 +17,7 @@ class EtatFactory extends Factory
     public function definition()
     {
         return [
-            'nom_etat'=> fake()->word(),
+            'nom'=> fake()->word(),
         ];
     }
 }

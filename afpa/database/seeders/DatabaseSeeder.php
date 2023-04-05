@@ -7,7 +7,7 @@ use Illuminate\Database\Seeder;
 use App\Models\Visibilite;
 use App\Models\Etat;
 use App\Models\Template;
-use App\Models\Media_evenement;
+use App\Models\Media;
 use App\Models\Evenement;
 use App\Models\Type_media;
 
@@ -27,17 +27,17 @@ class DatabaseSeeder extends Seeder
         
         foreach ($visibilites as $visibilite) {
             Visibilite::factory()->create([
-                'nom_visibilite' => $visibilite,
+                'nom' => $visibilite,
             ]);
         }
         foreach ($etats as $etat) {
             Etat::factory()->create([
-                'nom_etat' => $etat,
+                'nom' => $etat,
             ]);
         }
         foreach ($typesMedia as $typeMedia) {
             Type_Media::factory()->create([
-                'nom_type_media' => $typeMedia,
+                'nom' => $typeMedia,
             ]);
         }
         /* Visibilite::factory(3)->create(); */
@@ -45,7 +45,7 @@ class DatabaseSeeder extends Seeder
         /*  Type_Media::factory(2)->create(); */
         Template::factory(4)->create();
         Evenement::factory(10)->create();
-        Media_evenement::factory(10)->create();
+        Media::factory(10)->create();
 
         
     }

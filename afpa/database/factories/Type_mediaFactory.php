@@ -17,7 +17,7 @@ class Type_mediaFactory extends Factory
     public function definition()
     {
         return [
-            'nom_type_media'=> fake()->word(),
+            'nom'=> fake()->word(),
         ];
     }
 }

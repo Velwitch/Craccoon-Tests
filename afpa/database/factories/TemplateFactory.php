@@ -17,8 +17,8 @@ class TemplateFactory extends Factory
     public function definition()
     {
         return [
-            'nom_template'=> fake()->word(),
-            'image_template'=> fake()->title(),
+            'nom'=> fake()->word(),
+            'preview'=> fake()->title(),
         ];
     }
 }

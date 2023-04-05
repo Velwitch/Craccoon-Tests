@@ -23,11 +23,27 @@
         </style>
     </head>
     <body class="antialiased">
+    <form id="recetteForm" class="px-5 " action="{{ route('evenements.index') }}" method="GET" enctype="multipart/form-data">
+            @csrf
+           
+            <button>index</button>
+        </form>
+    <form id="recetteForm" class="px-5 " action="{{ route('evenements.store') }}" method="POST" enctype="multipart/form-data">
+            @csrf
+            
+            <button>store</button>
+        </form>
     <form id="recetteForm" class="px-5 " action="{{ route('evenements.update', 11) }}" method="POST" enctype="multipart/form-data">
             @csrf
-            @method('DELETE')
-            <button>ValidatesRequests</button>
+            @method('PUT')
+            <button>update</button>
         </form>
+    <form id="recetteForm" class="px-5 " action="{{ route('evenements.destroy', 11) }}" method="POST" enctype="multipart/form-data">
+            @csrf
+            @method('DELETE')
+            <button>destroy</button>
+        </form>
+    
         <div class="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center py-4 sm:pt-0">
             @if (Route::has('login'))
                 <div class="hidden fixed top-0 right-0 px-6 py-4 sm:block">

@@ -12,7 +12,7 @@ class Etat extends Model
     protected $table = 'etats';
 
     protected $fillable = [
-		'nom_etat',
+		'nom',
 
 	];
 

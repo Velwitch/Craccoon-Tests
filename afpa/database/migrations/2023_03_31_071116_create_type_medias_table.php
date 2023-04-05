@@ -14,8 +14,8 @@ return new class extends Migration
     public function up()
     {
         Schema::create('type_medias', function (Blueprint $table) {
-            $table->id('id_type_media');
-            $table->string('nom_type_media');
+            $table->id();
+            $table->string('nom');
             $table->timestamps();
         });
     }

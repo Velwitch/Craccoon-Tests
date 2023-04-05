@@ -20,13 +20,13 @@ class EvenementFactory extends Factory
     public function definition()
     {
         return [
-            'titre_evenement'=> fake()->title(),
-            'slug_evenement'=> fake()->title(),
-            'resume_evenement'=> fake()->paragraph(),
-            'contenu_evenement'=> fake()->paragraph(),
-            'id_etat'=> Etat::all()->random()->id_etat,
-            'id_template'=> Template::all()->random()->id_template,
-            'id_visibilite'=> Visibilite::all()->random()->id_visibilite,
+            'titre'=> fake()->title(),
+            'slug'=> fake()->title(),
+            'resume'=> fake()->paragraph(),
+            'contenu'=> fake()->paragraph(),
+            'etat_id'=> Etat::all()->random()->id,
+            'template_id'=> Template::all()->random()->id,
+            'visibilite_id'=> Visibilite::all()->random()->id,
         ];
     }
 }

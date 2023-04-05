@@ -12,7 +12,7 @@ class Visibilite extends Model
     protected $table = 'visibilites';
 
     protected $fillable = [
-		'nom_visibilite',
+		'nom',
 		
 	];
 
