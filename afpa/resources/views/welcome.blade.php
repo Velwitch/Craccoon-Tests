@@ -28,21 +28,8 @@
            
             <button>index</button>
         </form>
-    <form id="recetteForm" class="px-5 " action="{{ route('evenements.store') }}" method="POST" enctype="multipart/form-data">
-            @csrf
-            
-            <button>store</button>
-        </form>
-    <form id="recetteForm" class="px-5 " action="{{ route('evenements.update', 11) }}" method="POST" enctype="multipart/form-data">
-            @csrf
-            @method('PUT')
-            <button>update</button>
-        </form>
-    <form id="recetteForm" class="px-5 " action="{{ route('evenements.destroy', 11) }}" method="POST" enctype="multipart/form-data">
-            @csrf
-            @method('DELETE')
-            <button>destroy</button>
-        </form>
+        <a href="{{ route('evenements.indexUser') }}">indexUser</a>
+   
     
         <div class="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center py-4 sm:pt-0">
             @if (Route::has('login'))

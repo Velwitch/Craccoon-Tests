@@ -19,6 +19,7 @@ class EvenementAdminController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
     public function index()
     {
         $evenements = Evenement::all();
@@ -30,6 +31,18 @@ class EvenementAdminController extends Controller
             ->with('evenements', $evenements);
     }
 
+    public function indexUser()
+    {
+        $evenements = Evenement::paginate(5);
+        $images = Media::lesImages();
+
+
+        return view('evenements.indexEvenements')
+            ->with('images', $images)
+            ->with('evenements', $evenements);
+    }
+
+
     /**
      * Show the form for creating a new resource.
      *
@@ -37,7 +50,13 @@ class EvenementAdminController extends Controller
      */
     public function create()
     {
-        return view('evenements.formulaireEvenement');
+        $templates = Template::all();
+        $visibilites = Visibilite::all();
+        $etats = Etat::all();
+        return view('evenements.formulaireEvenement')
+            ->with('templates', $templates)
+            ->with('visibilites',  $visibilites)
+            ->with('etats', $etats);;
     }
 
     /**
@@ -48,13 +67,13 @@ class EvenementAdminController extends Controller
      */
     public function store(Request $request)
     {
-        $titre = 'Tarataa mon boul';
+        $titre = $request['titre'];
         $slug = Str::slug($titre);
-        $resume = 'test du resumé tatarrzeze . /> ';
-        $contenu = 'djsfnjsdjnjndsfsjdcnjsbdjbvsb   shdsdhiufhiusd dsfds ;:dsdzuçà"éè"';
-        $idEtat = 1;
-        $idTemplate = 1;
-        $idVisibilite = 1;
+        $resume = $request['resume'];
+        $contenu =  $request['contenu'];
+        $idEtat =  $request['etat'];
+        $idTemplate =  $request['template'];
+        $idVisibilite =  $request['visibilite'];
 
         // --------------------------------------------------
 
@@ -69,37 +88,33 @@ class EvenementAdminController extends Controller
 
         ]);
 
-        $idEvenement = $evenement['id'];
+        $id = $evenement['id'];
 
-        //-------------------------------------
+        if ($request['image'] !== null) {
+            $file = $request->file('image');
+            $path = $file->store('/public/imagesEvenement');
+            Media::create([
+                'chemin' => Storage::url($path),
+                'titre' => "image",
+                'positionnement' => 2,
+                'type_media_id' => 2,
+                'evenement_id' => $id,
+            ]);
+        }
 
-        $cheminImg = 'images/fk';
-        $titreImg = 'image';
-        $positionImg = 1;
-        $idTypeImg = 1;
+        $fullUrl = $request['urlVid'];
+        $videoId = str_replace('https://www.youtube.com/watch?v=', '', $fullUrl);
 
-        $cheminVid = 'http:yt';
-        $titreVid = 'video';
-        $positionVid = 2;
-        $idTypeVid = 2;
-
-
-
-        Media::create([
-            'chemin' => $cheminImg,
-            'titre' => $titreImg,
-            'positionnement' => $positionImg,
-            'type_media_id' => $idTypeImg,
-            'evenement_id' => $idEvenement,
-        ]);
-
-        Media::create([
-            'chemin' => $cheminVid,
-            'titre' => $titreVid,
-            'positionnement' => $positionVid,
-            'type_media_id' => $idTypeVid,
-            'evenement_id' => $idEvenement,
-        ]);
+        if ($request['urlVid'] !== null) {
+            Media::create([
+                'chemin' => $videoId,
+                'titre' => "image",
+                'positionnement' => 1,
+                'type_media_id' => 1,
+                'evenement_id' => $id,
+            ]);
+        }
+        return redirect()->route('evenements.index');
     }
 
 
@@ -111,7 +126,20 @@ class EvenementAdminController extends Controller
      */
     public function show($id)
     {
-        //
+        $evenement = Evenement::cetEvenement($id);
+        $image = Media::cetteImage($id);
+        $video = Media::cetteVideo($id);
+        $templates = Template::all();
+        $visibilites = Visibilite::all();
+        $etats = Etat::all();
+
+        return view('evenements.evenement')
+            ->with('image', $image)
+            ->with('video', $video)
+            ->with('evenement', $evenement)
+            ->with('templates', $templates)
+            ->with('visibilites',  $visibilites)
+            ->with('etats', $etats);
     }
 
     /**
@@ -129,7 +157,7 @@ class EvenementAdminController extends Controller
         $visibilites = Visibilite::all();
         $etats = Etat::all();
 
-        return view('evenements.formulaireEvenement')
+        return view('evenements.formulaireModificationEvenement')
             ->with('image', $image)
             ->with('video', $video)
             ->with('evenement', $evenement)
@@ -147,7 +175,6 @@ class EvenementAdminController extends Controller
      */
     public function update(Request $request, $id)
     {
-
 
         $titre = $request['titre'];
         $slug = Str::slug($titre);
@@ -169,17 +196,14 @@ class EvenementAdminController extends Controller
         $evenement->visibilite_id = $idVisibilite;
         $evenement->save();
 
-        // ----------------------------------
+        // ----------------------------------     
 
-        
-        
-        
         if ($request['imageDeleted'] == 1) {
             Media::where('medias.evenement_id', '=', $id)
-            ->where('medias.type_media_id', '=', 2)
-            ->delete();
+                ->where('medias.type_media_id', '=', 2)
+                ->delete();
         }
-        
+
         if ($request['image'] !== null) {
             $file = $request->file('image');
             $path = $file->store('/public/imagesEvenement');
@@ -192,11 +216,10 @@ class EvenementAdminController extends Controller
             ]);
         }
 
-
         $fullUrl = $request['urlVid'];
         $videoId = str_replace('https://www.youtube.com/watch?v=', '', $fullUrl);
 
-       
+
         if ($request['videoDeleted'] == 1) {
             Media::where('medias.evenement_id', '=', $id)
                 ->where('medias.type_media_id', '=', 1)
@@ -212,6 +235,7 @@ class EvenementAdminController extends Controller
                 'evenement_id' => $id,
             ]);
         }
+        return redirect()->route('evenements.index');
     }
 
     /**

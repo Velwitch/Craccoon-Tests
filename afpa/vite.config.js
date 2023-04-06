@@ -7,7 +7,9 @@ export default defineConfig({
             input: [
                 'resources/css/app.css',
                 'resources/js/app.js',
-                'resources/js/evenements.js',
+                'resources/js/evenementFormulaire.js',
+                'resources/js/evenementmodification.js',
+                'resources/js/evenementIndexUser.js',
             ],
             refresh: true,
         }),

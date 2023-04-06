@@ -30,6 +30,14 @@ class Media extends Model
 
 		return $images;
 	}
+    public static function lesImages(){
+		$images = Media::select('*')
+		->join('type_medias', 'medias.type_media_id', '=', 'type_medias.id' )
+		->where('medias.type_media_id','=', 2)
+		->get();
+
+		return $images;
+	}
     public static function cetteImage($id){
 		$image = Media::select('*')
 		->join('type_medias', 'medias.type_media_id', '=', 'type_medias.id' )		

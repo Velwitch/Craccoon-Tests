@@ -6,10 +6,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    @vite(['resources/js/evenementFormulaire.js'])
 </head>
 
 <body>
-    <a href="">
+    <a href="{{route('home')}}">
         <button>
             < </button>
                 <span>Retour à l'index admin</span>
@@ -18,21 +19,21 @@
     <div>
 
 
-        <select name="visibilite" id="visibilite">
+        <select name="visibilite" id="visibilite" onchange="filterTable()">>
             <option value="all">Filtrer par état...</option>
-            <option value="Public">Public</option>
-            <option value="Prive">Privé</option>
-            <option value="Confidentiel">Confidentiel</option>
+            <option value="publié">publié</option>
+            <option value="non publié">non publié</option>
+            <option value="archivé">archivé</option>
         </select>
 
-        <input type="text" placeholder="Rechercher">
+        <input type="text" id="rechercher" placeholder="Rechercher" oninput="rechercher()">
 
-        <span><button>+</button><span>Créer un article</span></span>
+        <a href="{{route ('evenements.create') }}"><span><button>+</button><span>Créer un article</span></span></a>
 
     </div>
 
     <div class="flex flex-row ">
-        <table>
+        <table id="tableEvenements">
             <tr>
                 <th>Etat</th>
                 <th>Visibilité</th>
@@ -71,13 +72,48 @@
 </body>
 
 <script>
-   function confirmDelete() {
-  if (window.confirm("Confirmer la suppression")) {
- 
-  } else {
-    event.preventDefault();
-  }
-}
+    function rechercher(){
+        let input = document.getElementById("rechercher");
+        let value = input.value;
+        let table = document.getElementById("tableEvenements");
+        let rows = table.getElementsByTagName("tr");
+
+        for (let i = 1; i < rows.length; i++) {
+            let cible = rows[i].getElementsByTagName("td")[3];
+          
+            if (value === "" || cible.textContent.includes(value)) {
+                rows[i].style.display = "";
+            } else {
+                rows[i].style.display = "none";
+            }
+        }
+    }
+
+    function filterTable() {
+        let select = document.getElementById("visibilite");
+        let filterValue = select.value;
+        let table = document.getElementById("tableEvenements");
+        let rows = table.getElementsByTagName("tr");
+
+
+        for (let i = 1; i < rows.length; i++) {
+            let visibilite = rows[i].getElementsByTagName("td")[0];
+            console.log(visibilite);
+            if (filterValue === "all" || visibilite.textContent === filterValue) {
+                rows[i].style.display = "";
+            } else {
+                rows[i].style.display = "none";
+            }
+        }
+    }
+
+    function confirmDelete() {
+        if (window.confirm("Confirmer la suppression")) {
+
+        } else {
+            event.preventDefault();
+        }
+    }
 </script>
 
 </html>

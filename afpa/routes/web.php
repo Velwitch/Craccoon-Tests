@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\EvenementAdminController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,11 +15,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::resource('evenements', 'App\Http\Controllers\EvenementAdminController');
+Route::resource('admin/evenements', 'App\Http\Controllers\EvenementAdminController');
+Route::get('/evenements', [EvenementAdminController::class, 'indexUser'])->name('evenements.indexUser');
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('home');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
