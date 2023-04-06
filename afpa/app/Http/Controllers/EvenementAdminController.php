@@ -5,8 +5,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Evenement;
 use App\Models\Media;
+use App\Models\Template;
+use App\Models\Visibilite;
+use App\Models\Etat;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class EvenementAdminController extends Controller
 {
@@ -20,11 +24,10 @@ class EvenementAdminController extends Controller
         $evenements = Evenement::all();
         $images = Media::all();
 
-     
-        return view('evenements.gestionEvenements')
-        ->with('images', $images)
-        ->with('evenements', $evenements);
 
+        return view('evenements.gestionEvenements')
+            ->with('images', $images)
+            ->with('evenements', $evenements);
     }
 
     /**
@@ -34,7 +37,7 @@ class EvenementAdminController extends Controller
      */
     public function create()
     {
-        // return view(formulaireCreation)
+        return view('evenements.formulaireEvenement');
     }
 
     /**
@@ -108,7 +111,7 @@ class EvenementAdminController extends Controller
      */
     public function show($id)
     {
-     //
+        //
     }
 
     /**
@@ -119,10 +122,20 @@ class EvenementAdminController extends Controller
      */
     public function edit($id)
     {
-        $evenements = Evenement::cetEvenement($id);
+        $evenement = Evenement::cetEvenement($id);
         $image = Media::cetteImage($id);
-        $all = [$evenements, $image];
-        return ($all);
+        $video = Media::cetteVideo($id);
+        $templates = Template::all();
+        $visibilites = Visibilite::all();
+        $etats = Etat::all();
+
+        return view('evenements.formulaireEvenement')
+            ->with('image', $image)
+            ->with('video', $video)
+            ->with('evenement', $evenement)
+            ->with('templates', $templates)
+            ->with('visibilites',  $visibilites)
+            ->with('etats', $etats);
     }
 
     /**
@@ -134,13 +147,15 @@ class EvenementAdminController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $titre = 'Tarataa mon boul modif';
+
+
+        $titre = $request['titre'];
         $slug = Str::slug($titre);
-        $resume = 'test du resumé tatarrzeze . /> modif';
-        $contenu = 'djsfnjsdjnjndsfsjdcnjsbdjbvsb   shdsdhiufhiusd dsfds ;:dsdzuçà"éè modif"';
-        $idEtat = 1;
-        $idTemplate = 1;
-        $idVisibilite = 1;
+        $resume = $request['resume'];
+        $contenu =  $request['contenu'];
+        $idEtat =  $request['etat'];
+        $idTemplate =  $request['template'];
+        $idVisibilite =  $request['visibilite'];
 
 
         $evenement = Evenement::find($id);
@@ -156,31 +171,47 @@ class EvenementAdminController extends Controller
 
         // ----------------------------------
 
+        
+        
+        
+        if ($request['imageDeleted'] == 1) {
+            Media::where('medias.evenement_id', '=', $id)
+            ->where('medias.type_media_id', '=', 2)
+            ->delete();
+        }
+        
+        if ($request['image'] !== null) {
+            $file = $request->file('image');
+            $path = $file->store('/public/imagesEvenement');
+            Media::create([
+                'chemin' => Storage::url($path),
+                'titre' => "image",
+                'positionnement' => 2,
+                'type_media_id' => 2,
+                'evenement_id' => $id,
+            ]);
+        }
+
+
+        $fullUrl = $request['urlVid'];
+        $videoId = str_replace('https://www.youtube.com/watch?v=', '', $fullUrl);
+
        
-        $image = ['images/fkMODIF', 'image', 1, 1, $id];
-        $video = ['http:ytMODIF', 'video', 2, 2, $id];
+        if ($request['videoDeleted'] == 1) {
+            Media::where('medias.evenement_id', '=', $id)
+                ->where('medias.type_media_id', '=', 1)
+                ->delete();
+        }
 
-        DB::transaction(function () use ($evenement, $image, $video) {
-            $evenement->media_evements()->delete();
-             Media::create([
-            'chemin' => $image[0],
-            'titre' => $image[1],
-            'positionnement' => $image[2],
-            'type_media_id' => $image[3],
-            'evenement_id' => $image[4],
-        ]);
-
-        Media::create([
-            'chemin' =>  $video[0],
-            'titre' => $video[1],
-            'positionnement' => $video[2],
-            'type_media_id' => $video[3],
-            'evenement_id' => $video[4],
-        ]);
-       
-        });
-
-
+        if ($request['urlVid'] !== null) {
+            Media::create([
+                'chemin' => $videoId,
+                'titre' => "image",
+                'positionnement' => 1,
+                'type_media_id' => 1,
+                'evenement_id' => $id,
+            ]);
+        }
     }
 
     /**
@@ -192,12 +223,12 @@ class EvenementAdminController extends Controller
     public function destroy($id)
 
     {
-    
-    $evenement = Evenement::find($id) ;
-    $evenement->media_evements()->delete();   
-    $evenement->delete();
+
+        $evenement = Evenement::find($id);
+        $evenement->media_evements()->delete();
+        $evenement->delete();
 
 
-    return redirect()->route('evenements.index');
+        return redirect()->route('evenements.index');
     }
 }

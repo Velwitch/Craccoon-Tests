@@ -18,7 +18,7 @@
     <div>
 
 
-        <select name="cars" id="cars">
+        <select name="visibilite" id="visibilite">
             <option value="all">Filtrer par état...</option>
             <option value="Public">Public</option>
             <option value="Prive">Privé</option>
