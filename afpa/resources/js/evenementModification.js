@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const vidInput = document.getElementById("urlVid");
     const vidPreview = document.getElementById("vidPreview");
 
-    if (bouttonImage !== null) {
+    if (bouttonVideo !== null) {
         bouttonVideo.addEventListener("click", (event) => {
             event.preventDefault();
             vidInput.value = '';
