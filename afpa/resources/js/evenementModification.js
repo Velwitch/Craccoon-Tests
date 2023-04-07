@@ -71,17 +71,10 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
 
-    /*  CK EDITOR */
-    /*  ClassicEditor
-         .create(document.querySelector('#editor1'))
- 
-         .catch(error => {
-             console.error(error);
-         }); */
-    ClassicEditor
-        .create(document.querySelector('#editor2'))
+    let editor = CKEDITOR.replace( 'editor2' );
 
-        .catch(error => {
-            console.error(error);
-        });
+    editor.on( 'required', function( evt ) {
+        editor.showNotification( 'Ce champ est requis', 'warning' );
+        evt.cancel();
+    } );
 });

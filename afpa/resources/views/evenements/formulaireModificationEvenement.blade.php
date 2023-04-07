@@ -6,18 +6,20 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <script src="https://cdn.ckeditor.com/ckeditor5/36.0.1/classic/ckeditor.js"></script>
+    <script src="https://cdn.ckeditor.com/4.21.0/basic/ckeditor.js"></script>
 
     @vite(['resources/css/app.css', 'resources/js/evenementModification.js'])
 </head>
 
 <body class="flex flex-col items-center">
-    <main class="w-[95vw] max-w-7xl border p-5">
+    <main class="w-[95vw]  max-w-7xl  p-5 bg-white shadow-2xl">
+        <h1 class="text-center text-2xl w-72 p-5 border mx-auto">Modifier évènement "{{$evenement[0]['titre']}}"</h1>
         <form id="evenementForm" class="mx-5 " action="{{ route('evenements.update', ['evenement' => $evenement[0]['id']]) }}" method="POST" enctype="multipart/form-data" class="flex flex-col" onkeydown="return event.key != 'Enter'; ">
             @csrf
             @method('PUT')
             <!-- Partie Haute -->
-            <div class="flex flex-row justify-between gap-6 w-full mt-20">
+
+            <div class="flex flex-row justify-between gap-6 w-full mt-14">
                 <div class="w-9/12">
                     <h2>Titre</h2>
                     <input class="w-10/12" type="text" name="titre" placeholder="Titre de l'article" value="{{$evenement[0]['titre']}}">
@@ -42,11 +44,14 @@
 
 
             <!-- Partie basse -->
-            <div class="flex gap-20 w-9/12 justify-evenly">
-                <div class="flex flex-col w-72">
-                    <div id="imageInputDiv" class="hidden">
+            <div class="flex gap-20 w-9/12 justify-evenly mt-8">
+                <div class="flex flex-col w-72 ">
+                    <div id="imageInputDiv" class="hidden flex flex-col items-center mb-5">
                         <span>Inserer une image</span>
-                        <label for="image" class="bg-blue-500 w-6/12">Upload</label>
+                        <div class="bg-blue-500 w-48 h-10 flex justify-center items-center">
+                            <label for="image">Upload</label>
+                        </div>
+
                         <input type="file" id='image' name="image" accept="image/*" class="hidden">
                         <input type="text" name='imageDeleted' class="hidden" id='imageDeleted' value='0'>
                     </div>
@@ -63,7 +68,7 @@
 
                 </div>
                 <div class="flex flex-col  w-72 gap-5 items-center">
-                    <div id="videoInputDiv" class="hidden">
+                    <div id="videoInputDiv" class="hidden flex flex-col items-center mb-5">
                         <label for="urlVid">URL d'une vidéo</label>
                         <input type="text" id="urlVid" name="urlVid" @if (isset($video[0]['chemin'])) value="https://www.youtube.com/embed/{{ $video[0]['chemin'] }}" @endif>
                         <input type="text" name='videoDeleted' class="hidden" id='videoDeleted' value='0'>

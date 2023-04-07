@@ -36,18 +36,16 @@ document.addEventListener('DOMContentLoaded', function () {
 
     });
 
+   /*  const annuler = document.getElementById("annuler");
+    annuler.addEventListener("click", (event)=>{
+        event.preventDefault();
+    }); */
+ 
+    let editor = CKEDITOR.replace( 'editor2' );
 
-    /*  CK EDITOR */
-    /*  ClassicEditor
-        .create(document.querySelector('#editor1'))
-
-        .catch(error => {
-            console.error(error);
-        }); */
-    ClassicEditor
-        .create(document.querySelector('#editor2'))
-
-        .catch(error => {
-            console.error(error);
-        }); 
+    editor.on( 'required', function( evt ) {
+        editor.showNotification( 'Ce champ est requis', 'warning' );
+        evt.cancel();
+    } );
+    
 });

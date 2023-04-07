@@ -9,52 +9,60 @@
     @vite(['resources/css/app.css', 'resources/js/evenementIndexUser.js'])
 </head>
 
-<body>
-    <a href="{{route('home')}}">Retour sur le menu</a>
+<body class="bg-green-700 flex justify-center">
+    <div class="bg-white w-11/12 my-10 rounded-lg flex flex-col items-center shadow-xl ">
 
-    <h1>Le journal du centre</h1>
+        <!--  bloc du haut -->
 
-    <input type="text" placeholder="rechercher..." id="rechercher" >
-    <div>
-        @foreach ($evenements as $evenement)
-        <a href="{{ route('evenements.show', ['evenement' => $evenement['id']]) }}">
-            <article class="flex mt-10 w-10/12 gap-10">
-                <div class="w-28">
-                    @php
-                    $imageExist = false;
-                    @endphp
+        <div class="w-11/12 flex flex-col items-center sm:items-start gap-5 mt-5">
+            <a href="{{route('home')}}">Retour sur le menu</a>
+            <h1 class="bg-green-600 w-full h-14 md:h-20 text-center text-white text-xl md:text-4xl font-bold rounded-lg flex items-center justify-center">Le journal de l'AFPA</h1>
+            <input class="w-9/12 sm:w-72 lg:w-96 rounded-xl shadow-md shadow-gray-300" type="text" placeholder="rechercher..." id="rechercher">
+        </div>
 
-                    @foreach ($images as $image)
-                    @if ($evenement['id'] == $image['evenement_id'])
-                    <img id="imagePreview" src="{{  asset($image['chemin']) }}" alt="image">
-                    @php
-                    $imageExist=true;
-                    @endphp
+        <!-- bloc des articles -->
 
-                    @endif
+        <div class="w-10/12 flex flex-col items-center justify-center mb-5">
+            @foreach ($evenements as $evenement)
+            <a class="w-full max-w-5xl" href="{{ route('evenements.show', ['evenement' => $evenement['id']]) }}">
+                <article class="flex flex-col md:flex-row rounded-xl mt-8 w-full justify-center items-center shadow-lg">
+                <!-- image -->
+                    <div class="md:w-4/12 flex justify-center items-center p-2">
+                        @php
+                        $imageExist = false;
+                        @endphp
 
-                    @endforeach
+                        @foreach ($images as $image)
+                        @if ($evenement['id'] == $image['evenement_id'])
+                        <img class="w-36 sm:w-40" id="imagePreview" src="{{  asset($image['chemin']) }}" alt="image">
+                        @php
+                        $imageExist=true;
+                        @endphp
 
-                    @if ($imageExist == false)
-                    <img id="imagePreview" src="{{  asset('storage/imagesEvenement/logo-afpa.jpg') }}" alt="sdfsdfsd">
-                    @endif
+                        @endif
 
+                        @endforeach
 
-                </div>
-                <div class="text-ellipsis">
-                    <h1>{{$evenement['titre']}}</h1>
-                    @if ($evenement['resume'] !== null)
-                    <p>{{$evenement['resume']}}</p>
-                    @else
-                    <p>{{$evenement['contenu']}}</p>
-                    @endif
-                </div>
-            </article>
-        </a>
-        @endforeach
+                        @if ($imageExist == false)
+                        <img class="w-36 sm:w-40" id="imagePreview" src="{{  asset('storage/imagesEvenement/logo-afpa.jpg') }}" alt="sdfsdfsd">
+                        @endif
+                    </div>
+                <!--  text -->
+                    <div class="w-11/12 md:w-8/12 m-5 ">
+                        <h1 class="font-bold ">{{$evenement['titre']}}</h1>
+                        @if ($evenement['resume'] !== null)
+                        <p class="overflow-ellipsis overflow-hidden truncate">{{$evenement['resume']}}</p>
+                        @else
+                        <p>{{$evenement['contenu']}}</p>
+                        @endif
+                    </div>
+                </article>
+            </a>
+            @endforeach
+        </div>
+
+        {{ $evenements->links() }}
     </div>
-
-    {{ $evenements->links() }}
 </body>
 
 
