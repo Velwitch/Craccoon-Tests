@@ -25,6 +25,11 @@ document.addEventListener('DOMContentLoaded', function () {
   
     vidInput.addEventListener("input", function () {
         let vidUrl = vidInput.value;
+        if (vidUrl !== '') {
+            vidPreview.classList.remove('hidden');
+        }else{
+            vidPreview.classList.add('hidden');
+        }
 
         let vidID = vidUrl.replace('https://www.youtube.com/watch?v=', '');
         vidPreview.src = "https://www.youtube.com/embed/" + vidID;
@@ -33,16 +38,16 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
     /*  CK EDITOR */
-   /*  ClassicEditor
+    /*  ClassicEditor
         .create(document.querySelector('#editor1'))
 
         .catch(error => {
             console.error(error);
-        });
+        }); */
     ClassicEditor
         .create(document.querySelector('#editor2'))
 
         .catch(error => {
             console.error(error);
-        }); */
+        }); 
 });

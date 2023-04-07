@@ -49,6 +49,7 @@ document.addEventListener('DOMContentLoaded', function () {
             event.preventDefault();
             vidInput.value = '';
             vidPreview.src = '';
+            vidPreview.classList.add('hidden');
             document.querySelector('#videoDeleted').value = 1;
             document.querySelector('#videoInputDiv').classList.remove('hidden');
             bouttonVideo.classList.add('hidden');
@@ -58,6 +59,11 @@ document.addEventListener('DOMContentLoaded', function () {
 
     vidInput.addEventListener("input", function () {
         let vidUrl = vidInput.value;
+        if (vidUrl !== '') {
+            vidPreview.classList.remove('hidden');
+        }else{
+            vidPreview.classList.add('hidden');
+        }
 
         let vidID = vidUrl.replace('https://www.youtube.com/watch?v=', '');
         vidPreview.src = "https://www.youtube.com/embed/" + vidID;
@@ -66,12 +72,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
     /*  CK EDITOR */
-    ClassicEditor
-        .create(document.querySelector('#editor1'))
-
-        .catch(error => {
-            console.error(error);
-        });
+    /*  ClassicEditor
+         .create(document.querySelector('#editor1'))
+ 
+         .catch(error => {
+             console.error(error);
+         }); */
     ClassicEditor
         .create(document.querySelector('#editor2'))
 
