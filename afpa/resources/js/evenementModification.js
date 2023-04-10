@@ -77,4 +77,6 @@ document.addEventListener('DOMContentLoaded', function () {
         editor.showNotification( 'Ce champ est requis', 'warning' );
         evt.cancel();
     } );
+
+    
 });

@@ -11,6 +11,13 @@
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                     {{ __("You're logged in!") }}
                 </div>
+                <form id="recetteForm" class="px-5 " action="{{ route('evenements.index') }}" method="GET" enctype="multipart/form-data">
+            @csrf
+           
+            <button>index</button>
+        </form>
+        <a href="{{ route('evenements.indexUser') }}">indexUser</a>
+
             </div>
         </div>
     </div>
