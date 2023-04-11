@@ -24,6 +24,7 @@
 
         <div class="w-10/12 flex flex-col items-center justify-center mb-5">
             @foreach ($evenements as $evenement)
+            @if ($evenement['etat_id'] === 2 && $evenement['visibilite_id'] === 3)
             <a class="w-full max-w-5xl" href="{{ route('evenements.showUser', ['evenement' => $evenement['id']]) }}">
                 <article class="flex flex-col md:flex-row rounded-xl mt-8 w-full justify-center items-center shadow-lg">
                 <!-- image -->
@@ -58,6 +59,7 @@
                     </div>
                 </article>
             </a>
+            @endif
             @endforeach
         </div>
 

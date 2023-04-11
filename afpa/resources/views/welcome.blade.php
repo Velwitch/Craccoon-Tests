@@ -3,6 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        @vite(['resources/css/evenements.css'])
 
         <title>Laravel</title>
 
@@ -29,6 +30,7 @@
             <button>index</button>
         </form>
         <a href="{{ route('evenements.indexUser') }}">indexUser</a>
+        <x-danger-button>bite</x-danger-button>
    
     
         <div class="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center py-4 sm:pt-0">
