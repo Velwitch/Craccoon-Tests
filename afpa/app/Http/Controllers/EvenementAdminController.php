@@ -124,7 +124,7 @@ class EvenementAdminController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function showUser($id)
     {
         $evenement = Evenement::cetEvenement($id);
         $image = Media::cetteImage($id);

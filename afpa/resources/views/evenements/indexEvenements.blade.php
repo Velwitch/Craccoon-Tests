@@ -24,7 +24,7 @@
 
         <div class="w-10/12 flex flex-col items-center justify-center mb-5">
             @foreach ($evenements as $evenement)
-            <a class="w-full max-w-5xl" href="{{ route('evenements.show', ['evenement' => $evenement['id']]) }}">
+            <a class="w-full max-w-5xl" href="{{ route('evenements.showUser', ['evenement' => $evenement['id']]) }}">
                 <article class="flex flex-col md:flex-row rounded-xl mt-8 w-full justify-center items-center shadow-lg">
                 <!-- image -->
                     <div class="md:w-4/12 flex justify-center items-center p-2">
