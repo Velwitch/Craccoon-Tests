@@ -44,7 +44,7 @@
                         @endforeach
 
                         @if ($imageExist == false)
-                        <img class="w-36 sm:w-40" id="imagePreview" src="{{  asset('storage/imagesEvenement/logo-afpa.jpg') }}" alt="sdfsdfsd">
+                        <img class="w-36 sm:w-40" id="imagePreview" src="{{  asset('storage/imagesEvenement/logo-afpa.jpg') }}" alt="imageAfpa">
                         @endif
                     </div>
                 <!--  text -->
