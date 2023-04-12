@@ -59,7 +59,7 @@
                         @if (isset($image[0]['chemin']))
 
                         <button id="imageDelete" class="p-2 w-48 h-10 bg-red-500 rounded-md border-2 border-red-300 shadow">supprimer l'image</button>
-                        <img id="imagePreview" src="{{  asset($image[0]['chemin']) }}" alt="image">
+                        <img id="imagePreview" src="{{ Storage::url($image[0]['chemin']) }}{{  asset($image[0]['chemn']) }}" alt="image">
                         @else
                         <img id="imagePreview" alt="">
                         @endif

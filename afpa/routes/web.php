@@ -15,9 +15,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::resource('admin/evenements', 'App\Http\Controllers\EvenementAdminController')->middleware('role:Super Admin, Admin Evenement');
-Route::get('/evenements', [EvenementAdminController::class, 'indexUser'])->name('evenements.indexUser');
-Route::get('/evenements/{evenement}', [EvenementAdminController::class, 'showUser'])->name('evenements.showUser');
+Route::resource('admin/evenements', 'App\Http\Controllers\EvenementController')->middleware('role:Super Admin, Admin Evenement');
+Route::get('/evenements', [EvenementController::class, 'indexUser'])->name('evenements.indexUser');
+Route::get('/evenements/{evenement}', [EvenementController::class, 'showUser'])->name('evenements.showUser');
 
 Route::get('/', function () {
     return view('welcome');
