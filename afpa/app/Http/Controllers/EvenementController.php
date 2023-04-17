@@ -33,9 +33,13 @@ class EvenementAdminController extends Controller
 
     public function indexUser()
     {
-        $evenements = Evenement::paginate(5);
+      //  $evenements = Evenement::paginate(5);
         $images = Media::lesImages();
 
+        $evenements = Evenement::select('*')
+        ->where("visibilite_id", 3)
+        ->where("etat_id", 2)
+        ->get();
 
         return view('evenements.indexEvenements')
             ->with('images', $images)
